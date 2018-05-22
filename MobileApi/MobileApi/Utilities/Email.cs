@@ -12,9 +12,7 @@ namespace MobileApi.Utilities
         static bool enableSSL = true;
         static string emailFromAddress = "agarwala.uw@gmail.com"; //Sender Email Address  
         static string password = ConfigurationManager.AppSettings["password"]; //"Abc@123$%^"; //Sender Password  
-        //static string emailToAddress = "agarwala.uw@gmail.com"; //Receiver Email Address  
         static string subject = "Hello";
-        //static string body = "Hello, This is Email sending test using gmail.";
 
         public static void SendEMail(string recipient, string subject, string body)
         {

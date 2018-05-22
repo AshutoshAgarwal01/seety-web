@@ -27,44 +27,50 @@ namespace MobileApi.Utilities
                 Street = "1 My Way"
             };
 
-            order.ProjectTime = DateTime.Now;
+            //order.ProjectTime = DateTime.Now;
 
             order.OrderLines = getOrderLines();
 
             return order;
         }
 
-        private static List<Hierarchy> getOrderLines()
+        private static List<OrderLine> getOrderLines()
         {
-            var root = new Hierarchy()
+            var node1 = new HierarchyNode()
             {
                 NodeId = 1,
                 Name = "Air Conditioner",
                 Description = "What kind of air conditioner is this?",
                 OptionType = Enum.OptionType.SINGLE,
-                ParentId = -1,
-                Children = new List<HierarchyNode>()
-                {
-                    new HierarchyNode()
-                    {
-                        NodeId = 2,
-                        Name = "Split",
-                        Description = "",
-                        OptionType = Enum.OptionType.SINGLE,
-                        ParentId = 1,
-                    },
-                    new HierarchyNode()
-                    {
-                        NodeId = 3,
-                        Name = "Window",
-                        Description = "",
-                        OptionType = Enum.OptionType.SINGLE,
-                        ParentId = 1,
-                    }
-                }
+                ChildrenNodes = new List<HierarchyNode>()
             };
 
-            return new List<Hierarchy> { root };
+            var node2 = new HierarchyNode()
+            {
+                NodeId = 2,
+                Name = "Split",
+                Description = "",
+                OptionType = Enum.OptionType.SINGLE,
+                ChildrenNodes = new List<HierarchyNode>()
+            };
+
+            var node3 = new HierarchyNode()
+            {
+                NodeId = 3,
+                Name = "Window",
+                Description = "",
+                OptionType = Enum.OptionType.SINGLE,
+                ChildrenNodes = null
+            };
+
+
+            node2.ChildrenNodes.Add(node3);
+            node1.ChildrenNodes.Add(node2);
+
+            var orderLines = new List<OrderLine>();
+            orderLines.Add(new OrderLine(1, DateTime.Now, "This is a test order line.", node1));
+
+            return orderLines;
         }
     }
 }
