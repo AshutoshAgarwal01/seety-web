@@ -3,6 +3,7 @@ using MobileApi.Models;
 using MobileApi.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -26,27 +27,26 @@ namespace MobileApi.Controllers
         // POST: api/Order
         public async Task<IHttpActionResult> Post([FromBody]Order order)
         {
-            if(order == null)
-            {
-                return Content(HttpStatusCode.BadRequest, "Invalid order.");
-            }
-
-            //order = MockedData.GetOrder();
-
-            //var result = await DocumentDBRepository<Order>.CreateItemAsync(order);
-            var result = await DocumentDBRepository.CreateItemAsync<Order>(order);
-
             try
             {
-                Email.SendEMail(order.Customer.Email, "Hi there", "This is a test email");
+                if (order == null)
+                {
+                    return Content(HttpStatusCode.BadRequest, "Invalid order.");
+                }
+
+                order.OrderId = DateTime.Now.Ticks.ToString();
+                var result = await DocumentDBRepository.CreateItemAsync<Order>(order);
+                await Email.SendEmailAsync(order);
+
+                return Ok(result);
             }
             catch(Exception e)
             {
-                var p = 1;
+                Trace.TraceError(e.Message);
+                Trace.TraceError(e.StackTrace);
+                return Content(HttpStatusCode.InternalServerError, "Something went wrong!");
             }
-
-            return Ok(result);
-        }
+        } 
 
         // POST: api/Test
         [HttpPost]
@@ -59,8 +59,6 @@ namespace MobileApi.Controllers
             }
 
             //order = MockedData.GetOrder();
-
-            //var result = await DocumentDBRepository<HierarchyNode>.CreateItemAsync(order);
             var result = await DocumentDBRepository.CreateItemAsync<HierarchyNode>(order);
 
             return Ok(result);
