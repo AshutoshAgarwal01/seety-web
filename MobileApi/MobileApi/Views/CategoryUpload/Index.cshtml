@@ -1,0 +1,28 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hello Azure</title>
+</head>
+<body>
+    <div>
+        <h2>Basic File Upload</h2>
+        @using (Html.BeginForm("Process",
+                                "CategoryUpload",
+                                FormMethod.Post,
+                                new { enctype = "multipart/form-data" }))
+        {
+            <label for="file">Upload File:</label>
+            <input type="file" name="file" id="file" /><br><br>
+            <input type="submit" value="Upload File" />
+            <br><br>
+            @ViewBag.Message
+        }
+    </div>
+</body>
+</html>

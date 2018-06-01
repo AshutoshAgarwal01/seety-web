@@ -1,10 +1,6 @@
 ﻿using MobileApi.DataAccess;
-using MobileApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace MobileApi
@@ -14,8 +10,8 @@ namespace MobileApi
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
-            //            DocumentDBRepository<HierarchyNode>.Initialize();
+            AreaRegistration.RegisterAllAreas();
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
             DocumentDBRepository.Initialize();
         }
     }
