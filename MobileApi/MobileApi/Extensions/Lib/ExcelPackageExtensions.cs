@@ -11,7 +11,7 @@ namespace MobileApi.Extensions.Lib
 {
     public static class ExcelPackageExtensions
     {
-        public static List<CategoryNode> GetNodes(this ExcelPackage package)
+        public static List<Models.Category.ExcelRow> Rows(this ExcelPackage package)
         {
             var worksheet = package.Workbook.Worksheets.Where(s => s.Name.ToLower() == "hierarchy").FirstOrDefault();
 
@@ -22,20 +22,7 @@ namespace MobileApi.Extensions.Lib
 
             var sheetObject = GetObjectFromSheet(worksheet);
             var nodesJson = JsonConvert.SerializeObject(sheetObject.Values.First());
-            return JsonConvert.DeserializeObject<List<CategoryNode>>(nodesJson);
-        }
-
-        public static string ToJson(this ExcelPackage package)
-        {
-            var excelObject = new List<Dictionary<string, object>>();
-
-            foreach (var workSheet in package.Workbook.Worksheets)
-            {
-                var sheetObject = GetObjectFromSheet(workSheet);
-                excelObject.Add(sheetObject);
-            }
-
-            return new JavaScriptSerializer().Serialize(excelObject);
+            return JsonConvert.DeserializeObject<List<Models.Category.ExcelRow>>(nodesJson);
         }
 
         private static List<string> GetColumnNames(ExcelWorksheet workSheet)

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MobileApi.Extensions.Lib;
+using MobileApi.Utilities;
 
 namespace MobileApi.Controllers.WebApp
 {
@@ -21,13 +22,15 @@ namespace MobileApi.Controllers.WebApp
         [HttpPost]
         public ActionResult Process(HttpPostedFileBase file)
         {
-            List<CategoryNode> nodes = null;
+            List<Models.Category.ExcelRow> rows = null;
             if (Path.GetExtension(file.FileName) == ".xlsx")
             {
                 ExcelPackage package = new ExcelPackage(file.InputStream);
-                nodes = package.GetNodes();
+                rows = package.Rows();
             }
-            return View(nodes);
+            var categoryNodes = rows.Select(r => new CategoryNode(r)).ToList();
+            var hierarchyNodes = NodeUtility.GetHierarchyNodesFromCategories(categoryNodes);
+            return View(rows);
         }
     }
 }
