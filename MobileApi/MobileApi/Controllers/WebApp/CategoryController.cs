@@ -1,5 +1,6 @@
 ﻿using MobileApi.DataAccess;
 using MobileApi.Models.Category;
+using MobileApi.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace MobileApi.Controllers.WebApp
         public async Task<ActionResult> Index()
         {
             var categoryNodes = await DocumentDBRepository.GetItemsAsync<CategoryNode>(c => c.DocumentType == "HierarchyNode");
-            return View(categoryNodes);
+            var hierarchyNodes = NodeUtility.GetHierarchyNodesFromCategories(categoryNodes.ToList());
+            return View(hierarchyNodes);
         }
     }
 }

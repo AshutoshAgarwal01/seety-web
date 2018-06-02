@@ -134,6 +134,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\treeview-default-line.gif" />
+    <Content Include="Content\Images\treeview-default.gif" />
+    <Content Include="Content\jquery.treeview.css" />
     <Content Include="Content\Site.css" />
     <Content Include="EmailHtml\BasicMor - Copy.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -151,6 +154,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.treeview.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -174,6 +178,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TreeRenderer.cs" />
+    <Compile Include="Helpers\TreeRenderHtmlHelper.cs" />
     <Compile Include="Models\Category\CategoryNode.cs" />
     <Compile Include="Models\Category\ExcelRow.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -200,6 +206,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\CategoryUpload\Index.cshtml" />
     <Content Include="Views\CategoryUpload\Process.cshtml" />
+    <Content Include="Views\Category\Index1_old.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
