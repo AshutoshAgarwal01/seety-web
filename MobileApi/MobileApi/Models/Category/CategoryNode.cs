@@ -1,4 +1,5 @@
 ﻿using MobileApi.Enum;
+using MobileApi.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -63,7 +64,7 @@ namespace MobileApi.Models.Category
         public List<int> Children { get; set; }
         public String DocumentType
         {
-            get { return "HierarchyNode";  }
+            get { return Constants.CategoryDocumentTypeName;  }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MobileApi.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace MobileApi.Models
@@ -12,7 +13,7 @@ namespace MobileApi.Models
         public DateTime CreatedDateTime { get; set; }
         public String DocumentType
         {
-            get { return "Order"; }
+            get { return Constants.OrderDocumentTypeName; }
         }
     }
 }

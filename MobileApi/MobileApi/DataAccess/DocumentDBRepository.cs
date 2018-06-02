@@ -120,5 +120,53 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Create multiple documents at once in Cosmos Db collection using stored procedure.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data">List of documents (in C# object form)</param>
+        /// <param name="log"></param>
+        public static async Task BulkCreate<T>(List<T> data)
+        {
+            var storedProcedureName = "bulkCreate";
+            var collectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId);
+            StoredProcedure storedProcedure = client.CreateStoredProcedureQuery(collectionUri).Where(c => c.Id == storedProcedureName).AsEnumerable().FirstOrDefault();
+            try
+            {
+                var result = await client.ExecuteStoredProcedureAsync<int>(storedProcedure.SelfLink, data);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete all documents from collection.
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns>Returns indicator for success or failure.</returns>
+        public static async Task<int> BulkDelete(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return 0;
+            }
+            var storedProcedureName = "bulkDelete";
+            var collectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId);
+            StoredProcedure storedProcedure = client.CreateStoredProcedureQuery(collectionUri).Where(c => c.Id == storedProcedureName).AsEnumerable().FirstOrDefault();
+
+            try
+            {
+                return await client.ExecuteStoredProcedureAsync<int>(storedProcedure.SelfLink, query);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

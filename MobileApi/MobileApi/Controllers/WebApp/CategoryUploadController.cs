@@ -31,11 +31,13 @@ namespace MobileApi.Controllers.WebApp
                 rows = package.Rows();
             }
             var categoryNodes = rows.Select(r => new CategoryNode(r)).ToList();
-            foreach(var c in categoryNodes)
-            {
-                var result = await DocumentDBRepository.CreateItemAsync<CategoryNode>(c);
-            }
-            //var hierarchyNodes = NodeUtility.GetHierarchyNodesFromCategories(categoryNodes);
+            
+            //Delete all CategoryNodes first
+            var query = string.Format(@"select * from c where c.DocumentType = ""{0}""", Constants.CategoryDocumentTypeName);
+            await DocumentDBRepository.BulkDelete(query);
+
+            //Create 'em all
+            await DocumentDBRepository.BulkCreate(categoryNodes);
             return View(rows);
         }
     }

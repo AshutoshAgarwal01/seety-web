@@ -169,6 +169,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HierarchyController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\WebApp\CategoryController.cs" />
     <Compile Include="Controllers\WebApp\CategoryUploadController.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Models\ProjectLocation.cs" />
     <Compile Include="Models\Temp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Email.cs" />
     <Compile Include="Utilities\MockedData.cs" />
     <Compile Include="Utilities\NodeUtility.cs" />
