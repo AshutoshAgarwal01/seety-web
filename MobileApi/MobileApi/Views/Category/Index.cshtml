@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MobileApi.Models.Category.ExcelRow>
+﻿@model IEnumerable<MobileApi.Models.Category.CategoryNode>
 
 @{
     Layout = null;
@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Process</title>
+    <title>Index</title>
 </head>
 <body>
     <p>
@@ -25,9 +25,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OptionType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsRoot)
@@ -50,13 +47,14 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OptionType)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IsRoot)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Children)
+                @if (!(item.Children == null || item.Children.Count == 0))
+                {
+                    @(string.Join(",", item.Children))
+                }
+                @*@Html.DisplayFor(modelItem => string.Join(",",item.Children))*@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

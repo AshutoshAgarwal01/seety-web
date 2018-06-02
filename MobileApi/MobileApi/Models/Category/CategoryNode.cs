@@ -6,6 +6,11 @@ namespace MobileApi.Models.Category
 {
     public class CategoryNode
     {
+        public CategoryNode()
+        {
+
+        }
+
         public CategoryNode(ExcelRow row)
         {
             var isInt = int.TryParse(row.NodeId, out int tempNodeId);
@@ -58,7 +63,7 @@ namespace MobileApi.Models.Category
         public List<int> Children { get; set; }
         public String DocumentType
         {
-            set { value = "HierarchyNode"; }
+            get { return "HierarchyNode";  }
         }
     }
 }

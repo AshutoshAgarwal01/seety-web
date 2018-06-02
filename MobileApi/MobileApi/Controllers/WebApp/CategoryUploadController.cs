@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MobileApi.Extensions.Lib;
 using MobileApi.Utilities;
+using MobileApi.DataAccess;
+using System.Threading.Tasks;
 
 namespace MobileApi.Controllers.WebApp
 {
@@ -20,7 +22,7 @@ namespace MobileApi.Controllers.WebApp
         }
 
         [HttpPost]
-        public ActionResult Process(HttpPostedFileBase file)
+        public async Task<ActionResult> Process(HttpPostedFileBase file)
         {
             List<Models.Category.ExcelRow> rows = null;
             if (Path.GetExtension(file.FileName) == ".xlsx")
@@ -29,7 +31,11 @@ namespace MobileApi.Controllers.WebApp
                 rows = package.Rows();
             }
             var categoryNodes = rows.Select(r => new CategoryNode(r)).ToList();
-            var hierarchyNodes = NodeUtility.GetHierarchyNodesFromCategories(categoryNodes);
+            foreach(var c in categoryNodes)
+            {
+                var result = await DocumentDBRepository.CreateItemAsync<CategoryNode>(c);
+            }
+            //var hierarchyNodes = NodeUtility.GetHierarchyNodesFromCategories(categoryNodes);
             return View(rows);
         }
     }
